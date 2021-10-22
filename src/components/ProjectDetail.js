@@ -12,13 +12,13 @@ export const ProjectDetail = () => {
 
     return (
         <div className = "row project_detail mx-3" style={{marginTop:"90px"}}>
-            <div className="col-sm" id="project_detail_text">
+            <div className="col-lg-5" id="project_detail_text">
                 <h1 className="my-1" style={{marginBottom:"20px", fontSize:"30px"}}>{currentProject.name}</h1>
                 <p className="text-justify">{currentProject.description}</p>
             </div>
 
 
-            <div className="col-sm">
+            <div className="col-sm-7">
                 <div id="project_images" className="carousel slide" data-bs-ride="carousel">
 
                     <div className="carousel-inner">

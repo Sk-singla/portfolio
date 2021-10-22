@@ -10,6 +10,8 @@ import {useState} from 'react';
 import { Home } from './components/Home';
 import ProjectState from './context/projects/ProjectState';
 import { ProjectDetail } from './components/ProjectDetail';
+import SignUp from "./components/SignUp";
+import Login from "./components/login";
 
 function App() {
 
@@ -35,6 +37,14 @@ function App() {
 
             <Route exact path="/projectDetail/:id">
               <ProjectDetail/>
+            </Route>
+
+            <Route exact path="/signup">
+              <SignUp/>
+            </Route>
+
+            <Route exact path="/login">
+              <Login />
             </Route>
 
           </Switch>
