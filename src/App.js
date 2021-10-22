@@ -1,24 +1,49 @@
-import logo from './logo.svg';
 import './App.css';
+import { Header } from './components/Header';
+import { Menu } from './components/Menu';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from "react-router-dom";
+import {useState} from 'react';
+import { Home } from './components/Home';
+import ProjectState from './context/projects/ProjectState';
+import { ProjectDetail } from './components/ProjectDetail';
 
 function App() {
+
+
+  const [menuVisible, setMenuVisibility] = useState(false)
+
+  const toggleMenu = () => {
+    console.log(!menuVisible);
+    setMenuVisibility(!menuVisible);
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ProjectState>
+      <Router>
+        <div className="page-wrapper">
+          <Header toggleMenu={toggleMenu} />
+
+
+          <Switch>
+            <Route exact path="/">
+              <Home />
+            </Route>
+
+            <Route exact path="/projectDetail/:id">
+              <ProjectDetail/>
+            </Route>
+
+          </Switch>
+
+        </div>
+
+        {menuVisible ? <Menu toggleMenu={toggleMenu} /> : <div />}
+      </Router>
+    </ProjectState>
   );
 }
 
