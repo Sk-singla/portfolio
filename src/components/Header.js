@@ -7,10 +7,10 @@ export const Header = (props) => {
 
 
     const handleScroll = () => {
-        if(window.location.href.includes("http://localhost:3000/projectDetail")){
-            setNavbarVisibility(false)
-            return;
-        }
+        // if(window.location.href.includes("http://localhost:3000/projectDetail")){
+        //     setNavbarVisibility(false)
+        //     return;
+        // }
 
         const currentScrollY = window.scrollY
         if (currentScrollY > lastScrollY) {
