@@ -38,29 +38,45 @@ function AddProject(props) {
     }
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const response = await fetch(
-            "http://localhost:3300/api/projects/addProject",
-            {
-                method: 'POST',
-                headers:{
-                    "Content-Type":"application/json",
-                    "Authorization": localStorage.getItem("token")
-                },
-                body: JSON.stringify({
-                    "name":name,
-                    "description":description,
-                    "photos": projectPics.map((pic,idx)=>{
-                        return {"photoUrl":pic.name,"description":document.getElementById(`img_description${idx}`).value};
-                    }),
-                    "logo":logo?logo.name:null,
-                    "technologies": technologies
-                })
+        try{
+            const response = await fetch(
+                "http://localhost:3300/api/projects/addProject",
+                {
+                    method: 'POST',
+                    headers:{
+                        "Content-Type":"application/json",
+                        "Authorization": localStorage.getItem("token")
+                    },
+                    body: JSON.stringify({
+                        "name":name,
+                        "description":description,
+                        "photos": projectPics.map((pic,idx)=>{
+                            return {"photoUrl":pic.name,"description":document.getElementById(`img_description${idx}`).value};
+                        }),
+                        "logo":logo?logo.name:null,
+                        "technologies": technologies
+                    })
+                }
+            )
+            const result = await response.json();
+            console.log(result);
+            if(result.success){
+                clearAllFields();
+                history.push("/");
             }
-        )
-        const result = await response.json();
-        console.log(result);
+        } catch (e){
+            console.log(e.message);
+        }
     }
 
+
+    const clearAllFields = ()=>{
+        setName("");
+        setDescription("");
+        setTechnologies([]);
+        setLogo(null);
+        setProjectPics([]);
+    }
 
     return (
         <div style={{marginTop:"90px"}} className="container">

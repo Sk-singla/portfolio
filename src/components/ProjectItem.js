@@ -5,21 +5,20 @@ export const ProjectItem = (props) => {
 
     const { project } = props;
     const maxChars = 100;
-    function isValidHttpUrl(string) {
+
+    function getValidHttpUrl(string) {
         let url;
         try {
             url = new URL(string);
         } catch (_) {
-            return false;
+            return `https://source.unsplash.com/416x270/?project&sig=${project._id}`;
         }
-        return url.protocol === "http:" || url.protocol === "https:";
+        return url.protocol === "http:" || url.protocol === "https:" ? string: `https://source.unsplash.com/416x270/?project&sig=${project._id}`;
     }
     return (
         <article>
             <Link to={`/projectDetail/${project._id}`}>
-                {project.logo && isValidHttpUrl(project.logo) ? <img src={project.logo} alt="" height="270px" className="image" /> :
-                <img className="image" height="270px" key={project._id} src={`https://source.unsplash.com/416x270/?project&sig=${Math.random()}`} alt=""/> }
-
+                <img src={getValidHttpUrl(project.logo)} alt="" height="270px" className="image" />
                 <h3 className="major">{project.name}</h3>
                 <p>{project.description.length > maxChars ? project.description.substring(0,maxChars) + "..." : project.description}</p>
                 {/* <a href="/" className="special">Learn more</a> */}

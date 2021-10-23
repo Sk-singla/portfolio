@@ -1,12 +1,18 @@
 import React, {useState} from 'react';
+import {useHistory} from "react-router-dom";
 
 function Login(props) {
 
-    const [loginRequest,setLoginRequest] = useState({name:"",email:"",password:""});
+    const [loginRequest,setLoginRequest] = useState({email:"",password:""});
+    const history = useHistory()
 
 
     const handleChange = (event) => {
         setLoginRequest({...loginRequest, [event.target.name]: event.target.value});
+    }
+
+    const clearAllFields = () => {
+        setLoginRequest({email:"",password:""});
     }
 
     const handleSubmit = async (event) => {
@@ -26,9 +32,12 @@ function Login(props) {
             const result = await response.json();
             if(result.success){
                 localStorage.setItem("token",result.token);
+                localStorage.setItem("isAdmin",`${loginRequest.email === process.env.REACT_APP_ADMIN_MAIL}`)
+                clearAllFields()
                 console.log(localStorage.getItem("token"))
 
                 // NAVIGATE SOMEWHERE
+                history.push("/");
             } else {
                 console.log(result.error);
                 // SHOW ERROR MESSAGE

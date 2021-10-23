@@ -1,12 +1,18 @@
 import React, {useState} from 'react';
+import {useHistory} from "react-router-dom";
 
 function SignUp(props) {
 
     const [newUserRequest,setNewUserRequest] = useState({name:"",email:"",password:""});
-
+    const history = useHistory();
 
     const handleChange = (event) => {
         setNewUserRequest({...newUserRequest, [event.target.name]: event.target.value});
+    }
+
+
+    const clearAllFields = () => {
+        setNewUserRequest({name:"",email:"",password:""});
     }
 
     const handleSubmit = async (event) => {
@@ -26,9 +32,11 @@ function SignUp(props) {
             const result = await response.json();
             if(result.success){
                 localStorage.setItem("token",result.token);
+                localStorage.setItem("isAdmin",`${newUserRequest.email === process.env.REACT_APP_ADMIN_MAIL}`)
+                clearAllFields()
                 console.log(localStorage.getItem("token"))
-
                 // NAVIGATE SOMEWHERE
+                history.push("/");
             } else {
                 console.log(result.error);
                 // SHOW ERROR MESSAGE
