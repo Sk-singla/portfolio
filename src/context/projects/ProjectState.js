@@ -1,10 +1,9 @@
 import ProjectContext from "./ProjectContext";
-import { useState,useEffect } from "react";
+import {useState, useEffect, useCallback} from "react";
 
 
 const ProjectState = (props) => {
-    const host = "http://localhost:3300";
-    
+    const host = process.env.REACT_APP_SERVER_URL;
     const [projects, setProjects] = useState([
         {
             "_id": "616ecce83683100e860",
@@ -100,7 +99,7 @@ const ProjectState = (props) => {
         return projects.find((project) => { return project._id === id})
     }
 
-    const fetchProjects = async ()=> {
+    const fetchProjects = useCallback(async ()=> {
         const response = await fetch(
             `${host}/api/projects/getAllProjects`,
             {
@@ -114,7 +113,11 @@ const ProjectState = (props) => {
         const result = await response.json();
         console.log(result);
         setProjects(result.projects);
-    }
+    },[host])
+
+    useEffect(()=>{
+        fetchProjects();
+    },[fetchProjects])
 
     const setPros = (projs)=>{
         setProjects(projs);

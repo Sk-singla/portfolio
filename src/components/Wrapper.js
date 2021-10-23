@@ -4,8 +4,6 @@ import ProjectContext from '../context/projects/ProjectContext';
 
 export const Wrapper = () => {
     const context = useContext(ProjectContext);
-    const {projects} = context;
-    console.log(projects);
 
     return (
         <div>
@@ -18,7 +16,7 @@ export const Wrapper = () => {
                         <section className="features">
                             {
                                 context.projects.map((project)=>{
-                                    console.log(project);
+                                    // console.log(project);
                                     return <ProjectItem key={project._id} project = {project}/>
                                 })
                             }

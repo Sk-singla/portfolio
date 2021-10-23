@@ -1,7 +1,7 @@
-import React, {useContext, useEffect} from 'react'
+import React, {useContext} from 'react'
 import ProjectContext from '../context/projects/ProjectContext';
 import { ProjectImageItem } from './ProjectImageItem';
-import {Redirect, useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 
 
 export const ProjectDetail = () => {

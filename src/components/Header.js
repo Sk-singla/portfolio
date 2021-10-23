@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useCallback} from 'react'
 
 export const Header = (props) => {
 
@@ -6,23 +6,17 @@ export const Header = (props) => {
     const [lastScrollY, setLastScrollY] = useState(0);
 
 
-    const handleScroll = () => {
-        // if(window.location.href.includes("http://localhost:3000/projectDetail")){
-        //     setNavbarVisibility(false)
-        //     return;
-        // }
-
+    const handleScroll = useCallback(() => {
         const currentScrollY = window.scrollY
         if (currentScrollY > lastScrollY) {
             setNavbarVisibility(false);
         } else {
             setNavbarVisibility(true);
         }
-        // console.log(currentScrollY)
-        // console.log(lastScrollY);
-        // console.log(showNavbar);
         setLastScrollY(currentScrollY);
-    };
+    },[lastScrollY])
+
+
     useEffect(() => {
         window.addEventListener('scroll', handleScroll);
         return () => {
