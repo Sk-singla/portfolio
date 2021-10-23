@@ -15,6 +15,13 @@ export const ProjectDetail = () => {
             <div className="col-lg-5" id="project_detail_text">
                 <h1 className="my-1" style={{marginBottom:"20px", fontSize:"30px"}}>{currentProject.name}</h1>
                 <p className="text-justify">{currentProject.description}</p>
+
+                {
+                    currentProject.technologies.map((tech) => {
+                        return <span className="badge badge-dark">{tech}</span>
+                    })
+                }
+
             </div>
 
 

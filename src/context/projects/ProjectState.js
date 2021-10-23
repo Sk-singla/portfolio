@@ -12,7 +12,10 @@ const ProjectState = (props) => {
             "description": "Hello world appHello world appHello world appHello world appHello world appHello world appHello world appHello world appHello world appHello world app world appHello world appHello world appHello world app world appHello world appHello world appHello world app world appHello world appHello world appHello world app world appHello world appHello world appHello world app world appHello world appHello world appHello world app world appHello world appHello world appHello world app world appHello world appHello world appHello world app world appHello world appHello world appHello world app world appHello world appHello world appHello world app world appHello world appHello world appHello world app world appHello world appHello world appHello world app world appHello world appHello world appHello world app world appHello world appHello world appHello world app \n world appHello world appHello world appHello world app world appHello world appHello world appHello world app world appHello world appHello world appHello world app world appHello world appHello world appHello world app ",
             "technologies": [
                 "Android",
-                "Kotlin"
+                "Kotlin",
+                "Hello",
+                "Hi",
+                "done",
             ],
             "photos": [
                 {
@@ -100,19 +103,23 @@ const ProjectState = (props) => {
     }
 
     const fetchProjects = useCallback(async ()=> {
-        const response = await fetch(
-            `${host}/api/projects/getAllProjects`,
-            {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
+        try {
+            const response = await fetch(
+                `${host}/api/projects/getAllProjects`,
+                {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
                 }
-            }
-        )
+            )
 
-        const result = await response.json();
-        console.log(result);
-        setProjects(result.projects);
+            const result = await response.json();
+            console.log(result);
+            setProjects(result.projects);
+        }catch (e){
+            console.log(e.message);
+        }
     },[host])
 
     useEffect(()=>{
