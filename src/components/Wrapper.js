@@ -62,11 +62,13 @@ export const Wrapper = () => {
                 <section id="four" className="wrapper alt style1">
                     <div className="inner">
                         <h2 className="major">My Projects</h2>
-                        {
-                            Array.from(allFilters).map((tech) => {
-                                return <span className={`badge badge-dark ${filters.find((filter)=>filter === tech)? "selected" : ""}`} onClick={handleClick}>{tech}</span>
-                            })
-                        }
+                        <div className="my-2">
+                            {
+                                Array.from(allFilters).map((tech) => {
+                                    return <span className={`badge badge-dark ${filters.find((filter)=>filter === tech)? "selected" : ""}`} onClick={handleClick}>{tech}</span>
+                                })
+                            }
+                        </div>
                         <section className="features">
                             {
                                 filteredProjects.map((project)=>{

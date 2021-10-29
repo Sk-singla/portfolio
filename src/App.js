@@ -12,7 +12,7 @@ import ProjectState from './context/projects/ProjectState';
 import { ProjectDetail } from './components/ProjectDetail';
 import SignUp from "./components/SignUp";
 import Login from "./components/login";
-import AddProject from "./components/AddProject";
+import UpdateProjects from "./components/UpdateProjects";
 
 function App() {
 
@@ -47,8 +47,9 @@ function App() {
             <Route exact path="/login">
               <Login />
             </Route>
-            <Route exact path="/addProject">
-              <AddProject/>
+
+            <Route path="/update/:id">
+              <UpdateProjects/>
             </Route>
 
           </Switch>

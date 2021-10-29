@@ -6,6 +6,33 @@
 	html5up.net | @ajlkn
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 */
+
+
+.inline_box_item{
+	display: inline-block;
+}
+
+input[type="file"]{
+	display: none;
+}
+.file_label{
+	background-color: transparent;
+	padding: 10px 15px;
+	border: rgba(255,255,255,0.3) 2px solid;
+	border-radius: 5px;
+	margin: auto 5px;
+	cursor: pointer;
+}
+
+hr {
+	margin-top: 0;
+	background: linear-gradient(to right, rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));
+}
+
+article{
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
 .badge {
 	background-color: black;
 	margin-right:5px;

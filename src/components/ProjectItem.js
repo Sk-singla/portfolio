@@ -18,7 +18,7 @@ export const ProjectItem = (props) => {
     return (
         <article>
             <Link to={`/projectDetail/${project._id}`}>
-                <img src={getValidHttpUrl(project.logo)} alt="" height="270px" className="image" />
+                <img src={getValidHttpUrl(project.logo)} alt="" height="65%" className="image" />
                 <h3 className="major">{project.name}</h3>
                 <p>{project.description.length > maxChars ? project.description.substring(0,maxChars) + "..." : project.description}</p>
                 {/* <a href="/" className="special">Learn more</a> */}

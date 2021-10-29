@@ -24,7 +24,7 @@ export const Menu = (props) => {
                         }
                         {
                             localStorage.getItem("isAdmin") === "true" ?
-                                <li><Link to="/addProject" onClick={props.toggleMenu}>Add New Project</Link></li>
+                                <li><Link to="/update/newProject" onClick={props.toggleMenu}>Add New Project</Link></li>
                                 : <div/>
                         }
                     </ul>
