@@ -1,4 +1,4 @@
-import React, {useContext} from 'react'
+import React, {useContext, useState} from 'react'
 import ProjectContext from '../context/projects/ProjectContext';
 import { ProjectImageItem } from './ProjectImageItem';
 import {Link, useHistory, useParams} from "react-router-dom";
@@ -10,6 +10,8 @@ export const ProjectDetail = () => {
     const context = useContext(ProjectContext);
     const { getProjectById } = context;
     const currentProject = getProjectById(id)
+
+    const [isVisible,setVisibility] = useState(false)
 
     const history = useHistory()
 
@@ -72,13 +74,18 @@ export const ProjectDetail = () => {
             </div>
 
 
-            <div className="my-2">
+            <div className={`my-2 ${!isVisible ? "visibility_gone" : ""}`}>
                 <div id="project_images" className="carousel slide" data-bs-ride="carousel">
 
                     <div className="carousel-inner">
                         {
                             currentProject.photos.map((photo, idx)=>{
-                                return <ProjectImageItem key = {photo._id} photo={photo} isActive = {idx === 0}/>
+                                return <ProjectImageItem
+                                    key = {photo._id}
+                                    photo={photo}
+                                    isActive = {idx === 0}
+                                    setVisibility={setVisibility}
+                                />
                             })
                         }
                     </div>

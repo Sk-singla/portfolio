@@ -8,15 +8,12 @@ import {
 } from "react-router-dom";
 import {useContext, useEffect, useState} from 'react';
 import { Home } from './components/Home';
-import ProjectState from './context/projects/ProjectState';
 import { ProjectDetail } from './components/ProjectDetail';
 import SignUp from "./components/SignUp";
 import Login from "./components/login";
 import UpdateProjects from "./components/UpdateProjects";
 import ProjectContext from "./context/projects/ProjectContext";
 
-
-// TODO: SHOW -> CLOSE BUTTON OF MENU, GITHUB AND PRODUCTION LINK OF PROJECT
 
 function App() {
 
