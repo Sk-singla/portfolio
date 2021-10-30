@@ -28,7 +28,7 @@ export const Menu = (props) => {
                                 : <div/>
                         }
                     </ul>
-                    <div className="close" onClick={props.toggleMenu}>Close</div>
+                    <div className="close" onClick={props.toggleMenu}><i className="fa fa-close"/></div>
                 </div>
             </nav>
         </div>

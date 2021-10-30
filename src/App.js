@@ -6,18 +6,29 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
-import {useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import { Home } from './components/Home';
 import ProjectState from './context/projects/ProjectState';
 import { ProjectDetail } from './components/ProjectDetail';
 import SignUp from "./components/SignUp";
 import Login from "./components/login";
 import UpdateProjects from "./components/UpdateProjects";
+import ProjectContext from "./context/projects/ProjectContext";
+
+
+// TODO: SHOW -> CLOSE BUTTON OF MENU, GITHUB AND PRODUCTION LINK OF PROJECT
 
 function App() {
 
 
   const [menuVisible, setMenuVisibility] = useState(false)
+  const context = useContext(ProjectContext);
+  const { fetchProjects } = context;
+
+  useEffect(()=>{
+    fetchProjects();
+  },[fetchProjects])
+
 
   const toggleMenu = () => {
     console.log(!menuVisible);
@@ -25,7 +36,6 @@ function App() {
   }
 
   return (
-    <ProjectState>
       <Router>
         <div className="page-wrapper">
           <Header toggleMenu={toggleMenu} />
@@ -58,7 +68,6 @@ function App() {
 
         {menuVisible ? <Menu toggleMenu={toggleMenu} /> : <div />}
       </Router>
-    </ProjectState>
   );
 }
 

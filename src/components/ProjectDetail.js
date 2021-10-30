@@ -10,6 +10,7 @@ export const ProjectDetail = () => {
     const context = useContext(ProjectContext);
     const { getProjectById } = context;
     const currentProject = getProjectById(id)
+
     const history = useHistory()
 
     if(!currentProject){
@@ -40,21 +41,30 @@ export const ProjectDetail = () => {
         <div className = "mx-3" style={{marginTop:"90px"}}>
             <div className="container my-2" id="project_detail_text">
                 <h1 className="my-1" style={{marginBottom:"20px", fontSize:"30px"}}>
-                    {currentProject.name}
+                    <a href={currentProject.productionLink} target="_blank" rel="noreferrer">
+                        {currentProject.name}
+                    </a>
+
+
+
+                    {currentProject.githubLink ?
+                        <a href={currentProject.githubLink} target="_blank" rel="noreferrer"><i className="fab fa-github" style={{color:"black", marginLeft:"10px",fontSize:"24px"}}/></a>
+                        : <div/>}
 
                     {/* IF ADMIN LOGGED IN THEN SHOW ICON TO EDIT PROJECT AND DELETE PROJECT*/}
                     {localStorage.getItem("isAdmin") ?
-                        <Link to = {`/update/${id}`}> <img src={edit_icon} width="25px" alt=""/> </Link>
+                        <Link to = {`/update/${id}`}> <i className="fa fa-edit" style={{color:"black",fontSize:"24px"}}/> </Link>
                         : <div/>}
 
                     {localStorage.getItem("isAdmin") ?
-                        <i className="material-icons" style={{color:'#000000', cursor:"pointer"}} onClick={deleteProject}>delete</i>
+                        <i className="fa fa-trash" onClick={deleteProject} style={{color:"black",fontSize:"24px"}}/>
                         : <div/>}
+
                 </h1>
 
                 {
-                    currentProject.technologies.map((tech) => {
-                        return <span className="badge badge-dark my-2">{tech}</span>
+                    currentProject.technologies.map((tech,idx) => {
+                        return <span key={idx} className="badge badge-dark my-2">{tech}</span>
                     })
                 }
                 <p className="my-1"> {currentProject.description}</p>
@@ -68,7 +78,7 @@ export const ProjectDetail = () => {
                     <div className="carousel-inner">
                         {
                             currentProject.photos.map((photo, idx)=>{
-                                return <ProjectImageItem photo={photo} isActive = {idx === 0}/>
+                                return <ProjectImageItem key = {photo._id} photo={photo} isActive = {idx === 0}/>
                             })
                         }
                     </div>

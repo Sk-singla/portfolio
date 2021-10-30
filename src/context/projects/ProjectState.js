@@ -4,7 +4,8 @@ import {useState, useEffect, useCallback} from "react";
 
 const ProjectState = (props) => {
     const host = process.env.REACT_APP_SERVER_URL;
-    const [projects, setProjects] = useState([
+    const savedProjects = localStorage.getItem("projects");
+    const [projects, setProjects] = useState( savedProjects ? JSON.parse(savedProjects) : [
         {
             "_id": "616ecce83683100e860",
             "name": "Meme's Magic",
@@ -115,16 +116,17 @@ const ProjectState = (props) => {
             )
 
             const result = await response.json();
-            console.log(result);
-            setProjects(result.projects);
+
+            if(result.success){
+                setProjects(result.projects);
+                localStorage.setItem("projects",JSON.stringify(result.projects))
+            } else {
+                console.log(result);
+            }
         }catch (e){
             console.log(e.message);
         }
     },[host])
-
-    useEffect(()=>{
-        fetchProjects();
-    },[fetchProjects])
 
     const setPros = (projs)=>{
         setProjects(projs);

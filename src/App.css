@@ -3338,22 +3338,16 @@ input, select, textarea {
 		}
 
 		#menu .close {
-			background-image: url("images/close.svg");
-			background-position: 75% 25%;
 			background-repeat: no-repeat;
 			background-size: 2em 2em;
 			border: 0;
-			content: '';
 			display: block;
-			height: 4em;
-			overflow: hidden;
 			position: absolute;
 			right: 0;
 			text-align: center;
-			text-indent: 4em;
 			top: 0;
-			width: 4em;
-      cursor: pointer;
+			cursor: pointer;
+			padding: 10px 15px;
 		}
 
 		#menu .links {

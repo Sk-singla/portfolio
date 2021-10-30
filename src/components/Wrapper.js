@@ -64,8 +64,8 @@ export const Wrapper = () => {
                         <h2 className="major">My Projects</h2>
                         <div className="my-2">
                             {
-                                Array.from(allFilters).map((tech) => {
-                                    return <span className={`badge badge-dark ${filters.find((filter)=>filter === tech)? "selected" : ""}`} onClick={handleClick}>{tech}</span>
+                                Array.from(allFilters).map((tech,idx) => {
+                                    return <span key={idx} className={`badge badge-dark ${filters.find((filter)=>filter === tech)? "selected" : ""}`} onClick={handleClick}>{tech}</span>
                                 })
                             }
                         </div>

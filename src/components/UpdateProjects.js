@@ -19,6 +19,8 @@ function UpdateProjects(props) {
     const [projectPics,setProjectPics] = useState([]);
     const [projectPicsDescriptions,setProjectPicsDescriptions] = useState([]);
     const [technologies,setTechnologies] = useState([]);
+    const [githubLink,setGithubLink] = useState("");
+    const [productionLink,setProductionLink] = useState("");
 
     const [oldPics,setOldPics] = useState([]);
     const [oldLogo,setOldLogo] = useState(null);
@@ -35,6 +37,8 @@ function UpdateProjects(props) {
             setTechnologies(currentProject.technologies);
             setOldPics(currentProject.photos);
             setOldLogo(currentProject.logo);
+            setGithubLink(currentProject.githubLink);
+            setProductionLink(currentProject.productionLink);
         }
     },[currentProject])
 
@@ -92,11 +96,21 @@ function UpdateProjects(props) {
         setTechnologies(event.target.value.split(", "));
     }
 
+    const handleGithubLink = (event) => {
+        setGithubLink(event.target.value);
+    }
+    const handleProductionLink = (event) => {
+        setProductionLink(event.target.value);
+    }
+
     const updateProject = async ()=>{
         const formData = new FormData()
 
         formData.append('name',name)
         formData.append('description',description)
+        formData.append('githubLink',githubLink.trim())
+        formData.append('productionLink',productionLink.trim())
+
         formData.append('logo',logo ? logo : oldLogo)
 
 
@@ -137,6 +151,10 @@ function UpdateProjects(props) {
         formData.append('name',name)
         formData.append('description',description)
         formData.append('logo',logo)
+
+        formData.append('githubLink',githubLink.trim())
+        formData.append('productionLink',productionLink.trim())
+
         for (let i = 0; i < projectPics.length; i++){
             formData.append('photos',projectPics[i]);
             formData.append('photos',projectPicsDescriptions[i]);
@@ -208,6 +226,17 @@ function UpdateProjects(props) {
                               placeholder="Enter Technologies Used (Coma and Space separated)"/>
                 </div>
 
+                <div className="form-group my-3">
+                    <label htmlFor="github_link">Github Link</label>
+                    <input type="text" className="form-control trans_white" id="github_link" name="github_link" value={githubLink} onChange={handleGithubLink}
+                           placeholder="Enter Project Github Link here..."/>
+                </div>
+                <div className="form-group my-3">
+                    <label htmlFor="production_link">Production Link</label>
+                    <input type="text" className="form-control" id="production_link" name="production_link" value={productionLink} onChange={handleProductionLink}
+                              placeholder="Enter Technologies Used (Coma and Space separated)"/>
+                </div>
+
                 <div className="form-group my-3 d-flex align-items-center">
                     <label className="file_label" htmlFor="logo"  style={{display:"inline-block"}}>Logo</label>
                     <input type="file" className="form-control-file" id="logo" accept="image/*" onChange={handleLogo}/>
@@ -254,7 +283,7 @@ function UpdateProjects(props) {
                     }
 
 
-                    <div className={`form-group ${projectPics.length > 0 ? "col-4 d-inline-flex align-items-center my-2" : "my-3"}`}>
+                    <div className={`form-group ${projectPics.length > 0 || oldPics.length > 0 ? "col-4 d-inline-flex align-items-center my-2" : "my-3"}`}>
                         <label className="file_label" htmlFor="project_pics" style={{display:"inline-block"}}>
                             {projectPics.length <= 0 && oldPics.length<=0 ? "Add Project Pictures" : <i className="material-icons">add</i>}
                         </label>
