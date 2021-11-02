@@ -19,7 +19,7 @@ function SignUp(props) {
         event.preventDefault();
         try{
             const response = await fetch(
-                "http://localhost:3300/api/auth/createuser",
+                `${process.env.REACT_APP_SERVER_URL}/api/auth/createuser`,
                 {
                     method: 'POST',
                     headers: {

@@ -19,7 +19,7 @@ function Login(props) {
         event.preventDefault();
         try{
             const response = await fetch(
-                "http://localhost:3300/api/auth/login",
+                `${process.env.REACT_APP_SERVER_URL}/api/auth/login`,
                 {
                     method: 'POST',
                     headers: {

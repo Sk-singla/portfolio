@@ -126,7 +126,7 @@ function UpdateProjects(props) {
         }
 
         const response = await fetch(
-            `http://localhost:3300/api/projects/updateProject/${currentProject._id}`,
+            `${process.env.REACT_APP_SERVER_URL}/api/projects/updateProject/${currentProject._id}`,
             {
                 method: 'POST',
                 headers:{
@@ -165,7 +165,7 @@ function UpdateProjects(props) {
 
 
         const response = await fetch(
-            "http://localhost:3300/api/projects/addProject",
+            `${process.env.REACT_APP_SERVER_URL}/api/projects/addProject`,
             {
                 method: 'POST',
                 headers:{

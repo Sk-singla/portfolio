@@ -23,12 +23,31 @@ function App() {
   const { fetchProjects } = context;
 
   useEffect(()=>{
+    dummyRequest()
+    dummyRequest()
     fetchProjects();
   },[fetchProjects])
 
+  const dummyRequest = async ()=>{
+    const response = await fetch(
+        `${process.env.REACT_APP_SERVER_URL}/api/auth/getuser`,
+        {
+          method: 'GET',
+          headers: {
+            "Authorization": localStorage.getItem("token")
+          }
+        }
+    )
+    const result = await response.json()
+    console.log(result);
+    if(!result.success){
+      localStorage.removeItem("token")
+      localStorage.removeItem("isAdmin")
+    }
+  }
+
 
   const toggleMenu = () => {
-    console.log(!menuVisible);
     setMenuVisibility(!menuVisible);
   }
 

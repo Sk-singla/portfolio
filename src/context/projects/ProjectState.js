@@ -1,5 +1,5 @@
 import ProjectContext from "./ProjectContext";
-import {useState, useEffect, useCallback} from "react";
+import {useState, useCallback} from "react";
 
 
 const ProjectState = (props) => {
@@ -116,10 +116,12 @@ const ProjectState = (props) => {
             )
 
             const result = await response.json();
+            console.log(result);
 
             if(result.success){
-                setProjects(result.projects);
+                // setProjects(result.projects);
                 localStorage.setItem("projects",JSON.stringify(result.projects))
+
             } else {
                 console.log(result);
             }

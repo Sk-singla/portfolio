@@ -2,7 +2,6 @@ import React, {useContext, useState} from 'react'
 import ProjectContext from '../context/projects/ProjectContext';
 import { ProjectImageItem } from './ProjectImageItem';
 import {Link, useHistory, useParams} from "react-router-dom";
-import edit_icon from "../images/icons-pencil.png"
 
 
 export const ProjectDetail = () => {
@@ -22,7 +21,7 @@ export const ProjectDetail = () => {
 
     const deleteProject = async ()=>{
         const response = await fetch(
-            `http://localhost:3300/api/projects/deleteProject/${currentProject._id}`,
+            `${process.env.REACT_APP_SERVER_URL}/api/projects/deleteProject/${currentProject._id}`,
             {
                 method: 'DELETE',
                 headers:{
@@ -32,6 +31,7 @@ export const ProjectDetail = () => {
         )
 
         const result = await response.json();
+        console.log(result)
         if(response.ok && result.success){
             history.push("/");
         } else {
