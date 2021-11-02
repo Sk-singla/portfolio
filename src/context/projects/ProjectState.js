@@ -121,7 +121,6 @@ const ProjectState = (props) => {
             if(result.success){
                 setProjects(result.projects);
                 localStorage.setItem("projects",JSON.stringify(result.projects))
-
             } else {
                 console.log(result);
             }

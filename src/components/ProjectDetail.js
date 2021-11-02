@@ -54,11 +54,11 @@ export const ProjectDetail = () => {
                         : <div/>}
 
                     {/* IF ADMIN LOGGED IN THEN SHOW ICON TO EDIT PROJECT AND DELETE PROJECT*/}
-                    {localStorage.getItem("isAdmin") ?
+                    {localStorage.getItem("isAdmin") === "true" ?
                         <Link to = {`/update/${id}`}> <i className="fa fa-edit" style={{color:"black",fontSize:"24px"}}/> </Link>
                         : <div/>}
 
-                    {localStorage.getItem("isAdmin") ?
+                    {localStorage.getItem("isAdmin") === "true" ?
                         <i className="fa fa-trash" onClick={deleteProject} style={{color:"black",fontSize:"24px"}}/>
                         : <div/>}
 

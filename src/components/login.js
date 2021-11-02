@@ -60,7 +60,7 @@ function Login(props) {
                     <label htmlFor="password">Password</label>
                     <input type="password" className="form-control" id="password" placeholder="Password" onChange={handleChange} name="password" value={loginRequest.password}/>
                 </div>
-                <button type="submit" className="my-3" style={{backgroundColor:"#353849"}}>Sign Up</button>
+                <button type="submit" className="my-3" style={{backgroundColor:"#353849"}}>Login</button>
             </form>
         </div>
     );
