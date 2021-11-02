@@ -3,7 +3,6 @@ import ProjectContext from '../context/projects/ProjectContext';
 import { ProjectImageItem } from './ProjectImageItem';
 import {Link, useHistory, useParams} from "react-router-dom";
 
-
 export const ProjectDetail = () => {
     const {id} = useParams()
     const context = useContext(ProjectContext);
@@ -50,16 +49,16 @@ export const ProjectDetail = () => {
 
 
                     {currentProject.githubLink ?
-                        <a href={currentProject.githubLink} target="_blank" rel="noreferrer"><i className="fab fa-github" style={{color:"black", marginLeft:"10px",fontSize:"24px"}}/></a>
+                        <a href={currentProject.githubLink} target="_blank" rel="noreferrer"><img src="/github.png" className="mx-2" alt=""  width="24px"/></a>
                         : <div/>}
 
                     {/* IF ADMIN LOGGED IN THEN SHOW ICON TO EDIT PROJECT AND DELETE PROJECT*/}
                     {localStorage.getItem("isAdmin") === "true" ?
-                        <Link to = {`/update/${id}`}> <i className="fa fa-edit" style={{color:"black",fontSize:"24px"}}/> </Link>
+                        <Link to = {`/update/${id}`}><img src="/edit_icon.png" className="mx-2" alt=""  width="24px"/> </Link>
                         : <div/>}
 
                     {localStorage.getItem("isAdmin") === "true" ?
-                        <i className="fa fa-trash" onClick={deleteProject} style={{color:"black",fontSize:"24px"}}/>
+                        <img src="/delete.png" alt=""  width="20px" onClick={deleteProject} style={{cursor:"pointer"}}/>
                         : <div/>}
 
                 </h1>

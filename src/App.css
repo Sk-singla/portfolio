@@ -3202,10 +3202,10 @@ input, select, textarea {
 						text-transform: none !important;
 						font-family: 'Font Awesome 5 Free';
 						font-weight: 900;
+						content: '\f0c9';
 					}
 
 					#header nav div:before {
-						content: '\f0c9';
 						line-height: inherit;
 					}
 
