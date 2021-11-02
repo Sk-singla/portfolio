@@ -25,6 +25,7 @@ function App() {
   useEffect(()=>{
     dummyRequest()
     dummyRequest()
+    console.log("-----------------------------")
     fetchProjects();
   },[fetchProjects])
 
