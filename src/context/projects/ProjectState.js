@@ -13,11 +13,9 @@ const ProjectState = (props) => {
         return projects.find((project) => { return project._id === id})
     }
 
-    const [projectsState,setProjectState] = useState(false) // true -> fetching, false-> not fetching
 
     const fetchProjects = useCallback(async ()=> {
         try {
-            setProjectState(true)
             const response = await fetch(
                 `${host}/api/projects/getAllProjects`,
                 {
@@ -30,7 +28,6 @@ const ProjectState = (props) => {
 
             const result = await response.json();
             console.log(result);
-            setProjectState(false);
 
             if(result.success){
                 setProjects(result.projects);
