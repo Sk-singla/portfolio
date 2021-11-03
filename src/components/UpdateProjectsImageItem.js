@@ -4,7 +4,7 @@ function UpdateProjectsImageItem(props) {
     const {idx,url,description,updateDesc,removeImage} = props;
 
     return (
-        <div style={{display:"inline-block"}} className="col-4 d-inline-flex align-items-center my-2">
+        <div style={{display:"inline-block"}} className="col-lg-4 col-md-6 col-sm-6 d-inline-flex align-items-center my-2">
             <img src={url} width="70px" style={{display:"inline-block"}} alt=""/>
             <div className="form-group mx-3"  style={{display:"inline-block"}}>
                 <input type="text" className="form-control" placeholder="Image Description..." name={`img_description${idx}`}

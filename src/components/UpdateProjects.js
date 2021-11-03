@@ -277,7 +277,7 @@ function UpdateProjects(props) {
 
                 </div>
 
-                <button type="submit" style={{display:"block"}} className="my-3">Submit</button>
+                <button type="submit" style={{display:"block"}} className="my-3 px-3">Submit</button>
 
             </form>
         </div>

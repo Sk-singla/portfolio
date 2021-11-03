@@ -5,6 +5,8 @@ function SignUp(props) {
 
     const [newUserRequest,setNewUserRequest] = useState({name:"",email:"",password:""});
     const history = useHistory();
+    const [passwordVisible,setPasswordVisibility] = useState(false);
+
 
     const handleChange = (event) => {
         setNewUserRequest({...newUserRequest, [event.target.name]: event.target.value});
@@ -60,11 +62,25 @@ function SignUp(props) {
                     <input type="email" className="form-control" id="email" aria-describedby="emailHelp" name="email" value={newUserRequest.email}
                            onChange={handleChange} placeholder="Enter email"/>
                 </div>
-                <div className="form-group my-3">
+
+                <div className="from-group my-3">
                     <label htmlFor="password">Password</label>
-                    <input type="password" className="form-control" id="password" placeholder="Password" onChange={handleChange} name="password" value={newUserRequest.password}/>
+                    <div className="input-group mb-3">
+                        <input type={ passwordVisible ? "text" : "password"} className="form-control" id="password"
+                               placeholder="Password" onChange={handleChange}
+                               name="password" value={newUserRequest.password}
+                               aria-label="Password" aria-describedby="Password"/>
+                        <span className="input-group-text cursor_pointer" id="password_visibility"
+                              onClick={()=>{
+                                  setPasswordVisibility(!passwordVisible);
+                              }}>
+                            <i className={passwordVisible? "fa fa-eye-slash" : "fa fa-eye"} aria-hidden="true"/>
+                        </span>
+                    </div>
                 </div>
-                <button type="submit" className="my-3" style={{backgroundColor:"#353849"}}>Sign Up</button>
+
+
+                <button type="submit" className="my-3 px-3" style={{backgroundColor:"#353849"}}>Sign Up</button>
             </form>
         </div>
     );
