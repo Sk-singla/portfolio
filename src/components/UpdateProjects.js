@@ -2,16 +2,41 @@ import React, {useContext, useEffect, useState} from 'react';
 import {useHistory, useParams} from "react-router-dom";
 import ProjectContext from "../context/projects/ProjectContext";
 import UpdateProjectsImageItem from "./UpdateProjectsImageItem";
+import {storage} from "../firebase/FirebaseInit";
+import {getDownloadURL, uploadBytes,ref } from "firebase/storage"
 
 function UpdateProjects(props) {
 
 
     const history = useHistory();
     useEffect(()=>{
-        if(!localStorage.getItem("token")){
+        if(localStorage.getItem("isAdmin")!=="true"){
              history.push("/login");
         }
     },[history])
+
+
+
+    const {id} = useParams()
+    const context = useContext(ProjectContext);
+    const { getProjectById } = context;
+    const currentProject = getProjectById(id)
+
+
+    useEffect(()=>{
+        if(currentProject!=null){
+            setName(currentProject.name)
+            setDescription(currentProject.description)
+            setTechnologies(currentProject.technologies);
+            setOldPics(currentProject.photos);
+            setOldLogo(currentProject.logo);
+            setGithubLink(currentProject.githubLink);
+            setProductionLink(currentProject.productionLink);
+        }
+    },[currentProject])
+
+
+
 
     const [name,setName] = useState("");
     const [description,setDescription] = useState("");
@@ -26,21 +51,6 @@ function UpdateProjects(props) {
     const [oldLogo,setOldLogo] = useState(null);
 
 
-    const {id} = useParams()
-    const context = useContext(ProjectContext);
-    const { getProjectById } = context;
-    const currentProject = getProjectById(id)
-    useEffect(()=>{
-        if(currentProject!=null){
-            setName(currentProject.name)
-            setDescription(currentProject.description)
-            setTechnologies(currentProject.technologies);
-            setOldPics(currentProject.photos);
-            setOldLogo(currentProject.logo);
-            setGithubLink(currentProject.githubLink);
-            setProductionLink(currentProject.productionLink);
-        }
-    },[currentProject])
 
 
 
@@ -103,92 +113,61 @@ function UpdateProjects(props) {
         setProductionLink(event.target.value);
     }
 
-    const updateProject = async ()=>{
-        const formData = new FormData()
 
-        formData.append('name',name)
-        formData.append('description',description)
-        formData.append('githubLink',githubLink.trim())
-        formData.append('productionLink',productionLink.trim())
-
-        formData.append('logo',logo ? logo : oldLogo)
-
-
-        for (let i = 0; i < projectPics.length; i++){
-            formData.append('new_photos',projectPics[i]);
-            formData.append('new_photos',projectPicsDescriptions[i]);
-        }
-        for(const tech of technologies){
-            formData.append('technologies',tech);
-        }
-        for (const oldPic of oldPics) {
-            formData.append('photos',JSON.stringify({photoUrl:oldPic.photoUrl,description:oldPic.description}));
-        }
-
-        const response = await fetch(
-            `${process.env.REACT_APP_SERVER_URL}/api/projects/updateProject/${currentProject._id}`,
-            {
-                method: 'POST',
-                headers:{
-                    "Authorization": localStorage.getItem("token")
-                },
-                body: formData
-            }
-        )
-        const result = await response.json();
-        console.log(result);
-        if(result.success){
-            clearAllFields();
-            history.push("/");
-        }
-
+    const uploadFileAndGetDownloadUrl = async (file)=>{
+        const imageRef = ref(storage,`images/${Date.now() + "-" +  file.name}`)
+        const result = await uploadBytes(imageRef,file);
+        console.log(`${file.name} uploaded`)
+        return await getDownloadURL(result.ref);
     }
 
-
-    const addNewProject = async ()=>{
-        const formData = new FormData()
-
-        formData.append('name',name)
-        formData.append('description',description)
-        formData.append('logo',logo)
-
-        formData.append('githubLink',githubLink.trim())
-        formData.append('productionLink',productionLink.trim())
-
-        for (let i = 0; i < projectPics.length; i++){
-            formData.append('photos',projectPics[i]);
-            formData.append('photos',projectPicsDescriptions[i]);
-        }
-        for(const tech of technologies){
-            formData.append('technologies',tech);
-        }
-
-
-        const response = await fetch(
-            `${process.env.REACT_APP_SERVER_URL}/api/projects/addProject`,
-            {
-                method: 'POST',
-                headers:{
-                    "Authorization": localStorage.getItem("token")
-                },
-                body: formData
-            }
-        )
-        const result = await response.json();
-        console.log(result);
-        if(result.success){
-            clearAllFields();
-            history.push("/");
-        }
-    }
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         try{
-            if(currentProject){
-                await updateProject()
-            } else {
-                await addNewProject()
+
+            const photos = [];
+            for (let i = 0; i < oldPics.length; i++) {
+                photos.push(oldPics[i]);
+            }
+            for (let i = 0; i < projectPics.length; i++){
+                photos.push(
+                    {
+                        "photoUrl":await uploadFileAndGetDownloadUrl(projectPics[i]),
+                        "description":projectPicsDescriptions[i]
+                    }
+                );
+            }
+
+            const project = {
+                "name":name,
+                "description":description,
+                "logo":logo ? await uploadFileAndGetDownloadUrl(logo) : oldLogo,
+                "githubLink": githubLink.trim(),
+                "productionLink": productionLink.trim(),
+                "photos": photos,
+                "technologies": technologies
+            }
+
+            console.log(project);
+
+
+            const response = await fetch(
+                `${process.env.REACT_APP_SERVER_URL}/api/projects/${currentProject ? "updateProject/"+currentProject._id : "addProject"}`,
+                {
+                    method: 'POST',
+                    headers:{
+                        "Content-Type": "Application/Json",
+                        "Authorization": localStorage.getItem("token")
+                    },
+                    body: JSON.stringify(project)
+                }
+            )
+            const result = await response.json();
+            console.log(result);
+            if(result.success){
+                clearAllFields();
+                history.push("/");
             }
         } catch (e){
             console.log(e.message);
@@ -202,6 +181,11 @@ function UpdateProjects(props) {
         setTechnologies([]);
         setLogo(null);
         setProjectPics([]);
+        setOldLogo(null);
+        setOldPics([]);
+        setProjectPicsDescriptions([])
+        setProductionLink("")
+        setGithubLink("")
     }
 
 

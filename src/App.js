@@ -30,20 +30,24 @@ function App() {
   },[fetchProjects])
 
   const dummyRequest = async ()=>{
-    const response = await fetch(
-        `${process.env.REACT_APP_SERVER_URL}/api/auth/getuser`,
-        {
-          method: 'GET',
-          headers: {
-            "Authorization": localStorage.getItem("token")
+    try{
+      const response = await fetch(
+          `${process.env.REACT_APP_SERVER_URL}/api/auth/getuser`,
+          {
+            method: 'GET',
+            headers: {
+              "Authorization": localStorage.getItem("token")
+            }
           }
-        }
-    )
-    const result = await response.json()
-    console.log(result);
-    if(!result.success){
-      localStorage.removeItem("token")
-      localStorage.removeItem("isAdmin")
+      )
+      const result = await response.json()
+      console.log(result);
+      if(!result.success){
+        localStorage.removeItem("token")
+        localStorage.removeItem("isAdmin")
+      }
+    }catch (e){
+      console.log(e.message);
     }
   }
 
