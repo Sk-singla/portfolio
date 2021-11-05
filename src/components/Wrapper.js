@@ -9,7 +9,6 @@ export const Wrapper = () => {
     const {projects} = context;
     const [filteredProjects,setFilteredProjects] = useState(projects);
 
-
     const handleClick = (event)=>{
         if(filters.find((filter)=>event.target.textContent === filter)){
             setFilters(filters.filter((filter)=> filter !== event.target.textContent));
@@ -21,6 +20,7 @@ export const Wrapper = () => {
     useEffect(()=>{
         const temp = new Set();
         for(let i=0;i<projects.length;i++) {
+
             if(!projects[i].technologies){
                 continue;
             }
@@ -71,7 +71,10 @@ export const Wrapper = () => {
                         </div>
                         <section className="features">
                             {
-                                filteredProjects.map((project)=>{
+                                filteredProjects.sort((a,b)=>{
+                                    return (a.endDate > b.endDate) ? -1 : ((b.endDate > a.endDate) ? 1 : 0)
+                                }).map((project)=>{
+                                    console.log(project.endDate);
                                     return <ProjectItem key={project._id} project = {project}/>
                                 })
                             }

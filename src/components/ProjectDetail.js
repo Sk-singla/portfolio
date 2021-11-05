@@ -78,7 +78,9 @@ export const ProjectDetail = () => {
 
                     <div className="carousel-inner">
                         {
-                            currentProject.photos.map((photo, idx)=>{
+                            currentProject.photos.sort((a,b)=>{
+                                return (a.index > b.index) ? 1 : ((b.index > a.index) ? -1 : 0)
+                            }).map((photo, idx)=>{
                                 return <ProjectImageItem
                                     key = {photo._id}
                                     photo={photo}

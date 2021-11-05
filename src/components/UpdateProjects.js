@@ -32,6 +32,12 @@ function UpdateProjects(props) {
             setOldLogo(currentProject.logo);
             setGithubLink(currentProject.githubLink);
             setProductionLink(currentProject.productionLink);
+
+            if(currentProject.startDate)
+            setStartDate(new Date(currentProject.startDate).toISOString().substr(0,10))
+
+            if(currentProject.endDate)
+            setEndDate(new Date(currentProject.endDate).toISOString().substr(0,10))
         }
     },[currentProject])
 
@@ -43,15 +49,15 @@ function UpdateProjects(props) {
     const [logo,setLogo] = useState(null);
     const [projectPics,setProjectPics] = useState([]);
     const [projectPicsDescriptions,setProjectPicsDescriptions] = useState([]);
+    const [projectPicsIndex,setProjectPicsIndex] = useState([]);
     const [technologies,setTechnologies] = useState([]);
     const [githubLink,setGithubLink] = useState("");
     const [productionLink,setProductionLink] = useState("");
+    const [startDate,setStartDate] = useState((new Date()).toISOString().substr(0,10));
+    const [endDate,setEndDate] = useState((new Date()).toISOString().substr(0,10));
 
     const [oldPics,setOldPics] = useState([]);
     const [oldLogo,setOldLogo] = useState(null);
-
-
-
 
 
 
@@ -72,8 +78,19 @@ function UpdateProjects(props) {
         projectPicsDescriptions[idx] = text;
         setProjectPicsDescriptions([...projectPicsDescriptions]);
     }
+
+    const handleProjectPicIndexChange = (text,idx)=>{
+        projectPicsIndex[idx] = parseInt(text);
+        setProjectPicsIndex([...projectPicsIndex]);
+    }
+
     const handleOldProjectDescriptionChange = (text,idx)=>{
         oldPics[idx].description = text
+        setOldPics([...oldPics])
+    }
+
+    const handleOldProjectPicIndexChange = (text,idx)=>{
+        oldPics[idx].index = parseInt(text)
         setOldPics([...oldPics])
     }
     const removeOldPic = (idx)=>{
@@ -113,6 +130,12 @@ function UpdateProjects(props) {
         setProductionLink(event.target.value);
     }
 
+    const handleStartDate = (event)=>{
+        setStartDate(event.target.value);
+    }
+    const handleEndDate = (event)=>{
+        setEndDate(event.target.value);
+    }
 
     const uploadFileAndGetDownloadUrl = async (file)=>{
         const imageRef = ref(storage,`images/${Date.now() + "-" +  file.name}`)
@@ -134,7 +157,8 @@ function UpdateProjects(props) {
                 photos.push(
                     {
                         "photoUrl":await uploadFileAndGetDownloadUrl(projectPics[i]),
-                        "description":projectPicsDescriptions[i]
+                        "description":projectPicsDescriptions[i],
+                        "index": projectPicsIndex[i]
                     }
                 );
             }
@@ -146,14 +170,16 @@ function UpdateProjects(props) {
                 "githubLink": githubLink.trim(),
                 "productionLink": productionLink.trim(),
                 "photos": photos,
-                "technologies": technologies
+                "technologies": technologies,
+                "startDate":(new Date(startDate).valueOf()),
+                "endDate":(new Date(endDate).valueOf()),
             }
 
             console.log(project);
 
 
             const response = await fetch(
-                `${process.env.REACT_APP_SERVER_URL}/api/projects/${currentProject ? "updateProject/"+currentProject._id : "addProject"}`,
+                `${process.env.REACT_APP_SERVER_URL}/api/projects/${currentProject ? "updateProject/"+id : "addProject"}`,
                 {
                     method: 'POST',
                     headers:{
@@ -221,6 +247,22 @@ function UpdateProjects(props) {
                               placeholder="Enter Technologies Used (Coma and Space separated)"/>
                 </div>
 
+                <div className="form-group my-3 me-3 date inline_box_item">
+                    <label htmlFor="start_date">Start Date</label>
+                    <input type="date" className="form-control" id="start_date" name="start_date"
+                           placeholder="Start Date" aria-label="start_date"
+                           aria-describedby="Start-Date" value={startDate} onChange={handleStartDate}/>
+                </div>
+
+                <div className="form-group my-3 date inline_box_item">
+                    <label htmlFor="end_date">End Date</label>
+                    <input type="date" className="form-control" id="end_date" name="end_date"
+                           placeholder="End Date" aria-label="end_date"
+                           aria-describedby="End-Date" value={endDate} onChange={handleEndDate}/>
+                </div>
+
+
+
                 <div className="form-group my-3 d-flex align-items-center">
                     <label className="file_label" htmlFor="logo"  style={{display:"inline-block"}}>Logo</label>
                     <input type="file" className="form-control-file" id="logo" accept="image/*" onChange={handleLogo}/>
@@ -250,6 +292,8 @@ function UpdateProjects(props) {
                                     description={pic.description}
                                     updateDesc={handleOldProjectDescriptionChange}
                                     removeImage={removeOldPic}
+                                    index={pic.index}
+                                    updateIndex={handleOldProjectPicIndexChange}
                                 />
                         })
                     }
@@ -262,6 +306,8 @@ function UpdateProjects(props) {
                                     description={projectPicsDescriptions[idx]}
                                     updateDesc={handleProjectDescriptionChange}
                                     removeImage={removeImage}
+                                    index={projectPicsIndex[idx]}
+                                    updateIndex={handleProjectPicIndexChange}
                                 />
                         })
                     }
