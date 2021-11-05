@@ -56,11 +56,11 @@ export const ProjectDetail = () => {
                         : <div/>}
 
                     {/* IF ADMIN LOGGED IN THEN SHOW ICON TO EDIT PROJECT AND DELETE PROJECT*/}
-                    {localStorage.getItem("isAdmin") === "true" ?
+                    {localStorage.getItem("email") === process.env.REACT_APP_ADMIN_MAIL ?
                         <Link to = {`/update/${id}`}><img src="/edit_icon.png" className="mx-2" alt=""  width="24px"/> </Link>
                         : <div/>}
 
-                    {localStorage.getItem("isAdmin") === "true" ?
+                    {localStorage.getItem("email") === process.env.REACT_APP_ADMIN_MAIL ?
                         <img src="/delete.png" alt=""  width="20px" onClick={deleteProject} style={{cursor:"pointer"}}/>
                         : <div/>}
 

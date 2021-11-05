@@ -34,7 +34,7 @@ function SignUp(props) {
             const result = await response.json();
             if(result.success){
                 localStorage.setItem("token",result.token);
-                localStorage.setItem("isAdmin",`${newUserRequest.email === process.env.REACT_APP_ADMIN_MAIL}`)
+                localStorage.setItem("email",newUserRequest.email)
                 clearAllFields()
                 console.log(localStorage.getItem("token"))
                 // NAVIGATE SOMEWHERE

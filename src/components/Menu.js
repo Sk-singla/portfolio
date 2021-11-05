@@ -6,7 +6,7 @@ export const Menu = (props) => {
     const handleLogout = (event) => {
         event.preventDefault();
         localStorage.removeItem("token");
-        localStorage.removeItem("isAdmin");
+        localStorage.removeItem("email");
         props.toggleMenu();
         history.push("/");
     }
@@ -23,7 +23,7 @@ export const Menu = (props) => {
                                 <li><Link to="/signup" onClick={props.toggleMenu}>Sign Up</Link></li></div>
                         }
                         {
-                            localStorage.getItem("isAdmin") === "true" ?
+                            localStorage.getItem("email") === process.env.REACT_APP_ADMIN_MAIL ?
                                 <li><Link to="/update/newProject" onClick={props.toggleMenu}>Add New Project</Link></li>
                                 : <div/>
                         }

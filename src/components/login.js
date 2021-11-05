@@ -33,7 +33,7 @@ function Login(props) {
             const result = await response.json();
             if(result.success){
                 localStorage.setItem("token",result.token);
-                localStorage.setItem("isAdmin",`${loginRequest.email === process.env.REACT_APP_ADMIN_MAIL}`)
+                localStorage.setItem("email",loginRequest.email)
                 clearAllFields()
                 console.log(localStorage.getItem("token"))
 
