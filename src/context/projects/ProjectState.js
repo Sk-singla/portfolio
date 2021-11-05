@@ -5,17 +5,45 @@ import {useState, useCallback} from "react";
 const ProjectState = (props) => {
     const host = process.env.REACT_APP_SERVER_URL;
     const savedProjects = localStorage.getItem("projects");
-    const [projects, setProjects] = useState( savedProjects? JSON.parse(savedProjects) : [])
+    const [projects, setProjects] = useState(  savedProjects ? JSON.parse(savedProjects) : [])
 
+    const [isLoading, setIsLoading] = useState(true);
 
 
     const getProjectById = (id) => {
         return projects.find((project) => { return project._id === id})
+        // return await fetchSingleProjectById(id);
     }
 
+    // const fetchSingleProjectById = async (id)=>{
+    //     try {
+    //         const response = await fetch(
+    //             `${host}/api/projects/getProject/${id}`,
+    //             {
+    //                 method: 'GET',
+    //                 headers: {
+    //                     'Content-Type': 'application/json'
+    //                 }
+    //             }
+    //         )
+    //
+    //         const result = await response.json();
+    //         console.log(result);
+    //
+    //         if(result.success){
+    //             return result.project;
+    //         } else {
+    //             console.log(result);
+    //             return null;
+    //         }
+    //     }catch (e){
+    //         console.log(e.message);
+    //     }
+    // }
 
     const fetchProjects = useCallback(async ()=> {
         try {
+            setIsLoading(true);
             const response = await fetch(
                 `${host}/api/projects/getAllProjects`,
                 {
@@ -35,8 +63,10 @@ const ProjectState = (props) => {
             } else {
                 console.log(result);
             }
+            setIsLoading(false);
         }catch (e){
             console.log(e.message);
+            setIsLoading(false);
         }
     },[host])
 
@@ -45,7 +75,7 @@ const ProjectState = (props) => {
     }
 
     return (
-        <ProjectContext.Provider value = {{projects,getProjectById,fetchProjects,setPros}}>
+        <ProjectContext.Provider value = {{projects,getProjectById,fetchProjects,setPros,isLoading}}>
             {props.children}
         </ProjectContext.Provider>
     )

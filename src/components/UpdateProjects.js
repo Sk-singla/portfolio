@@ -4,8 +4,12 @@ import ProjectContext from "../context/projects/ProjectContext";
 import UpdateProjectsImageItem from "./UpdateProjectsImageItem";
 import {storage} from "../firebase/FirebaseInit";
 import {getDownloadURL, uploadBytes,ref } from "firebase/storage"
+import Loading from "./Loading";
 
 function UpdateProjects(props) {
+
+    const [isLoading, setIsLoading] = useState(false);
+    const [loadingText, setLoadingText] = useState(null);
 
 
     const history = useHistory();
@@ -138,7 +142,8 @@ function UpdateProjects(props) {
     }
 
     const uploadFileAndGetDownloadUrl = async (file)=>{
-        const imageRef = ref(storage,`images/${Date.now() + "-" +  file.name}`)
+        setLoadingText(`Uploading ${file.name}...`);
+        const imageRef = ref(storage,`images/${Date.now() + "-" +  file.name}`);
         const result = await uploadBytes(imageRef,file);
         console.log(`${file.name} uploaded`)
         return await getDownloadURL(result.ref);
@@ -148,6 +153,7 @@ function UpdateProjects(props) {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try{
+            setIsLoading(true);
 
             const photos = [];
             for (let i = 0; i < oldPics.length; i++) {
@@ -177,7 +183,7 @@ function UpdateProjects(props) {
 
             console.log(project);
 
-
+            setLoadingText("Uploading Project...");
             const response = await fetch(
                 `${process.env.REACT_APP_SERVER_URL}/api/projects/${currentProject ? "updateProject/"+id : "addProject"}`,
                 {
@@ -189,13 +195,17 @@ function UpdateProjects(props) {
                     body: JSON.stringify(project)
                 }
             )
+            setLoadingText("Done");
+
             const result = await response.json();
             console.log(result);
+            setIsLoading(false);
             if(result.success){
                 clearAllFields();
                 history.push("/");
             }
         } catch (e){
+            setIsLoading(false);
             console.log(e.message);
         }
     }
@@ -218,6 +228,15 @@ function UpdateProjects(props) {
 
     return (
         <div style={{marginTop:"90px"}} className="container">
+
+            {
+                isLoading ?
+                    <Loading vertically_center={true} isAbs={true} text={loadingText}/>
+                    : <div/>
+            }
+
+
+
             <form onSubmit={handleSubmit}>
                 <div className="form-group my-3">
                     <label htmlFor="name">Project Name</label>

@@ -1,12 +1,13 @@
 import React, {useContext, useEffect, useState} from 'react'
 import { ProjectItem } from './ProjectItem'
 import ProjectContext from '../context/projects/ProjectContext';
+import Loading from "./Loading";
 
 export const Wrapper = () => {
     const context = useContext(ProjectContext);
     const [filters,setFilters] = useState([]);
     const [allFilters,setAllFilters] = useState(new Set());
-    const {projects} = context;
+    const {projects,isLoading} = context;
     const [filteredProjects,setFilteredProjects] = useState(projects);
 
     const handleClick = (event)=>{
@@ -69,21 +70,24 @@ export const Wrapper = () => {
                                 })
                             }
                         </div>
+
                         <section className="features">
                             {
+                                isLoading ? <Loading vertically_center={false}/>:
                                 filteredProjects.sort((a,b)=>{
                                     return (a.endDate > b.endDate) ? -1 : ((b.endDate > a.endDate) ? 1 : 0)
                                 }).map((project)=>{
-                                    console.log(project.endDate);
                                     return <ProjectItem key={project._id} project = {project}/>
                                 })
                             }
                         </section>
+
                         {/* <ul className="actions">
                             <li><a href="/" className="button">Browse All</a></li>
                         </ul> */}
                     </div>
                 </section>
+
             </section>
         </div>
     )

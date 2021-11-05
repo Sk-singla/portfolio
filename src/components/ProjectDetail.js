@@ -6,14 +6,14 @@ import {Link, useHistory, useParams} from "react-router-dom";
 export const ProjectDetail = () => {
     const {id} = useParams()
     const context = useContext(ProjectContext);
-    const { getProjectById } = context;
+    const { getProjectById, isLoading } = context;
     const currentProject = getProjectById(id)
 
     const [isVisible,setVisibility] = useState(false)
 
     const history = useHistory()
 
-    if(!currentProject){
+    if(!currentProject && !isLoading){
         history.push("/")
         return (<div/>);
     }
@@ -38,15 +38,18 @@ export const ProjectDetail = () => {
         }
 
     }
+
+
     return (
         <div className = "mx-3" style={{marginTop:"90px"}}>
             <div className="container my-2" id="project_detail_text">
                 <h1 className="my-1" style={{marginBottom:"20px", fontSize:"30px"}}>
                     <a href={currentProject.productionLink} target="_blank" rel="noreferrer">
                         {currentProject.name}
+                        {currentProject.productionLink ?
+                            <img src="/link_icon_arrow.png" className="mx-2" alt=""  width="24px"/>
+                            : <div/>}
                     </a>
-
-
 
                     {currentProject.githubLink ?
                         <a href={currentProject.githubLink} target="_blank" rel="noreferrer"><img src="/github.png" className="mx-2" alt=""  width="24px"/></a>
@@ -101,9 +104,6 @@ export const ProjectDetail = () => {
                 </div>
 
             </div>
-
-
-
         </div>
     )
 }

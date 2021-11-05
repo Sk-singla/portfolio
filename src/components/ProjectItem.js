@@ -17,7 +17,7 @@ export const ProjectItem = (props) => {
         return url.protocol === "http:" || url.protocol === "https:" ? string: `https://source.unsplash.com/416x270/?project&sig=${project._id}`;
     }
     return (
-        <article className={!isVisible ? "visibility_gone" : ""}>
+        <article className={!isVisible ? "visibility_gone" : ""}>   
             <Link to={`/projectDetail/${project._id}`}>
                 <img src={getValidHttpUrl(project.logo)} alt="" height="65%" className="image"
                      onLoad={()=>{setIsVisible(true)}}

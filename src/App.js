@@ -13,6 +13,7 @@ import SignUp from "./components/SignUp";
 import Login from "./components/login";
 import UpdateProjects from "./components/UpdateProjects";
 import ProjectContext from "./context/projects/ProjectContext";
+import Loading from "./components/Loading";
 
 
 function App() {
@@ -20,7 +21,7 @@ function App() {
 
   const [menuVisible, setMenuVisibility] = useState(false)
   const context = useContext(ProjectContext);
-  const { fetchProjects } = context;
+  const { fetchProjects, isLoading } = context;
 
   useEffect(()=>{
     dummyRequest()
@@ -60,15 +61,16 @@ function App() {
       <Router>
         <div className="page-wrapper">
           <Header toggleMenu={toggleMenu} />
-
-
           <Switch>
             <Route exact path="/">
               <Home />
             </Route>
 
             <Route exact path="/projectDetail/:id">
-              <ProjectDetail/>
+              {
+                isLoading ? <Loading vertically_center={true}/>
+                    : <ProjectDetail/>
+              }
             </Route>
 
             <Route exact path="/signup">
