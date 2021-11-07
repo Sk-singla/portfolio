@@ -26,7 +26,7 @@ function App() {
   useEffect(()=>{
     dummyRequest()
     dummyRequest()
-    console.log("-----------------------------")
+    // console.log("-----------------------------")
     fetchProjects();
   },[fetchProjects])
 
@@ -42,7 +42,7 @@ function App() {
           }
       )
       const result = await response.json()
-      console.log(result);
+      // console.log(result);
       if(!result.success){
         localStorage.removeItem("token")
         localStorage.removeItem("isAdmin")

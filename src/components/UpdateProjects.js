@@ -14,7 +14,7 @@ function UpdateProjects(props) {
 
     const history = useHistory();
     useEffect(()=>{
-        if(localStorage.getItem("isAdmin")!=="true"){
+        if(localStorage.getItem("email")!==process.env.REACT_APP_ADMIN_MAIL){
              history.push("/login");
         }
     },[history])
@@ -23,7 +23,7 @@ function UpdateProjects(props) {
 
     const {id} = useParams()
     const context = useContext(ProjectContext);
-    const { getProjectById } = context;
+    const { getProjectById, newAlert } = context;
     const currentProject = getProjectById(id)
 
 
@@ -202,11 +202,15 @@ function UpdateProjects(props) {
             setIsLoading(false);
             if(result.success){
                 clearAllFields();
+                newAlert(false,"Project Uploaded Successfully!");
                 history.push("/");
+            } else {
+                newAlert(true, result.error ? result.error : "Some Problem Occurred!");
             }
         } catch (e){
             setIsLoading(false);
             console.log(e.message);
+            newAlert(true, e.message ? e.message : "Some Problem Occurred!");
         }
     }
 

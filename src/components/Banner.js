@@ -14,5 +14,5 @@ export const Banner = () => {
 /**
  * todo: get single project by id route
  * todo: showing Loading and Errors
- * todo: change isAdmin from localhost to something else
+ * todo: remove anchor tag if not a link(project detail)
  */

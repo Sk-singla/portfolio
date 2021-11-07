@@ -6,6 +6,11 @@ const ProjectState = (props) => {
     const host = process.env.REACT_APP_SERVER_URL;
     const savedProjects = localStorage.getItem("projects");
     const [projects, setProjects] = useState(  savedProjects ? JSON.parse(savedProjects) : [])
+    const [alert,setAlert] = useState({error:false,message:""});
+
+    const newAlert = (error,message)=>{
+        setAlert({error,message});
+    }
 
     const [isLoading, setIsLoading] = useState(true);
 
@@ -55,7 +60,7 @@ const ProjectState = (props) => {
             )
 
             const result = await response.json();
-            console.log(result);
+            // console.log(result);
 
             if(result.success){
                 setProjects(result.projects);
@@ -75,7 +80,7 @@ const ProjectState = (props) => {
     }
 
     return (
-        <ProjectContext.Provider value = {{projects,getProjectById,fetchProjects,setPros,isLoading}}>
+        <ProjectContext.Provider value = {{projects,getProjectById,fetchProjects,setPros,isLoading,alert,newAlert}}>
             {props.children}
         </ProjectContext.Provider>
     )

@@ -10,7 +10,7 @@ export const Wrapper = () => {
     const {projects,isLoading} = context;
     const [filteredProjects,setFilteredProjects] = useState(projects);
 
-    const handleClick = (event)=>{
+    const handleCategoryClick = (event)=>{
         if(filters.find((filter)=>event.target.textContent === filter)){
             setFilters(filters.filter((filter)=> filter !== event.target.textContent));
         } else {
@@ -66,14 +66,14 @@ export const Wrapper = () => {
                         <div className="my-2">
                             {
                                 Array.from(allFilters).map((tech,idx) => {
-                                    return <span key={idx} className={`badge badge-dark ${filters.find((filter)=>filter === tech)? "selected" : ""}`} onClick={handleClick}>{tech}</span>
+                                    return <span key={idx} className={`badge badge-dark ${filters.find((filter)=>filter === tech)? "selected" : ""}`} onClick={handleCategoryClick}>{tech}</span>
                                 })
                             }
                         </div>
 
                         <section className="features">
                             {
-                                isLoading ? <Loading vertically_center={false}/>:
+                                isLoading && projects.size <=0  ? <Loading vertically_center={false}/>:
                                 filteredProjects.sort((a,b)=>{
                                     return (a.endDate > b.endDate) ? -1 : ((b.endDate > a.endDate) ? 1 : 0)
                                 }).map((project)=>{

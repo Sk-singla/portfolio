@@ -4,11 +4,15 @@ import {Link, useHistory} from 'react-router-dom'
 export const Menu = (props) => {
     const history = useHistory();
     const handleLogout = (event) => {
-        event.preventDefault();
-        localStorage.removeItem("token");
-        localStorage.removeItem("email");
-        props.toggleMenu();
-        history.push("/");
+        try{
+            event.preventDefault();
+            localStorage.removeItem("token");
+            localStorage.removeItem("email");
+            props.toggleMenu();
+            history.push("/");
+        }catch (e){
+            console.log(e.message);
+        }
     }
     return (
         <div>

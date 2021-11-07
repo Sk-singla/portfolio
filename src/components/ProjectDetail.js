@@ -44,25 +44,25 @@ export const ProjectDetail = () => {
         <div className = "mx-3" style={{marginTop:"90px"}}>
             <div className="container my-2" id="project_detail_text">
                 <h1 className="my-1" style={{marginBottom:"20px", fontSize:"30px"}}>
+                    {currentProject.name}
                     <a href={currentProject.productionLink} target="_blank" rel="noreferrer">
-                        {currentProject.name}
                         {currentProject.productionLink ?
                             <img src="/link_icon_arrow.png" className="mx-2" alt=""  width="24px"/>
-                            : <div/>}
+                            : <span/>}
                     </a>
 
                     {currentProject.githubLink ?
                         <a href={currentProject.githubLink} target="_blank" rel="noreferrer"><img src="/github.png" className="mx-2" alt=""  width="24px"/></a>
-                        : <div/>}
+                        : <span/>}
 
                     {/* IF ADMIN LOGGED IN THEN SHOW ICON TO EDIT PROJECT AND DELETE PROJECT*/}
                     {localStorage.getItem("email") === process.env.REACT_APP_ADMIN_MAIL ?
                         <Link to = {`/update/${id}`}><img src="/edit_icon.png" className="mx-2" alt=""  width="24px"/> </Link>
-                        : <div/>}
+                        : <span/>}
 
                     {localStorage.getItem("email") === process.env.REACT_APP_ADMIN_MAIL ?
                         <img src="/delete.png" alt=""  width="20px" onClick={deleteProject} style={{cursor:"pointer"}}/>
-                        : <div/>}
+                        : <span/>}
 
                 </h1>
 

@@ -1,9 +1,26 @@
-import React, {useState, useEffect, useCallback} from 'react'
+import React, {useState, useEffect, useCallback, useContext} from 'react'
+import TopAlertBar from "./TopAlertBar";
+import ProjectContext from "../context/projects/ProjectContext";
 
 export const Header = (props) => {
 
     const [showNavbar, setNavbarVisibility] = useState(true);
     const [lastScrollY, setLastScrollY] = useState(0);
+    const [isAlertVisible,setAlertVisibility] = useState(false);
+    const context = useContext(ProjectContext);
+    const {alert} = context;
+
+    useEffect(()=>{
+        if(alert.message && alert.message.trim() !== ""){
+            setAlertVisibility(true);
+            setTimeout(()=>{
+                setAlertVisibility(false);
+            },3000)
+        }
+        return ()=>{
+            setAlertVisibility(false);
+        }
+    },[alert])
 
 
     const handleScroll = useCallback(() => {
@@ -24,11 +41,17 @@ export const Header = (props) => {
         }
     }, [handleScroll])
     return (
-        <header id="header" className={`${!showNavbar ? "alt" : ""}`}>
-            <h1><a href="/">Samarth Gupta</a></h1>
-            <nav>
-                <div onClick={props.toggleMenu}>Menu</div>
-            </nav>
-        </header>
+        <div>
+            <header id="header" className={`${!showNavbar || isAlertVisible ? "alt" : ""}`}>
+                <h1><a href="/">Samarth Gupta</a></h1>
+                <nav>
+                    <div onClick={props.toggleMenu}>Menu</div>
+                </nav>
+            </header>
+            {
+                isAlertVisible ?
+                    <TopAlertBar/> : <span/>
+            }
+        </div>
     )
 }
