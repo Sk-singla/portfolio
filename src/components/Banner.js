@@ -12,7 +12,7 @@ export const Banner = () => {
                 <a href="https://www.linkedin.com/in/samarth-gupta-049120193" target="_blank" rel="noreferrer">
                     <i className="fa fa-linkedin me-3" style={{fontSize:"24px"}}/>
                 </a>
-                <a href="https://www.instagram.com/sk_singla02" target="_blank" rel="noreferrer">
+                <a href="https://www.instagram.com/sk_singla02/" target="_blank" rel="noreferrer">
                     <i className="fa fa-instagram me-3" style={{fontSize: "24px"}}/>
                 </a>
             </div>
