@@ -56,6 +56,7 @@ export const Wrapper = () => {
         }
         setFilteredProjects(temp);
     },[filters, projects])
+
     return (
         <div>
             <section className="wrapper">
@@ -73,8 +74,8 @@ export const Wrapper = () => {
 
                         <section className="features">
                             {
-                                isLoading && projects.size <=0  ? <Loading vertically_center={false}/>:
-                                filteredProjects.sort((a,b)=>{
+                                isLoading && projects.length <=0  ? <Loading vertically_center={false}/>
+                                : filteredProjects.sort((a,b)=>{
                                     return (a.endDate > b.endDate) ? -1 : ((b.endDate > a.endDate) ? 1 : 0)
                                 }).map((project)=>{
                                     return <ProjectItem key={project._id} project = {project}/>
