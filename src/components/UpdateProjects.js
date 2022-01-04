@@ -103,6 +103,9 @@ function UpdateProjects(props) {
     }
 
     const removeLogo = ()=>{
+        if(oldLogo != null){
+            setDeletingFiles([...deletingFiles,oldLogo]);
+        }
         setLogo(null);
         setOldLogo(null);
     }
