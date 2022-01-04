@@ -6,11 +6,13 @@ function AndroidImageItem({imageUrl,onLoad}) {
             <img
                 src="/empty_phone.png"
                 className="empty_phone"
+                alt=""
             />
             <img
                 src={imageUrl}
                 className="screenshot"
                 onLoad={onLoad}
+                alt=""
             />
         </div>
     );
