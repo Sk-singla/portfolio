@@ -6,6 +6,27 @@
 	html5up.net | @ajlkn
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 */
+
+
+.empty_phone{
+	position: relative;
+	width: 250px;
+	z-index: 1;
+}
+
+.screenshot{
+	position: absolute;
+	top: 55px;
+	width: 193px;
+	height: 350px;
+	z-index: 2;
+}
+
+
+
+
+
+
 .alert{
 	position: fixed;
 	width: 100%;
@@ -4197,12 +4218,6 @@ input, select, textarea {
 			padding: 2em 1.5em 0.1em 1.5em ;
 		}
 
-	}
-
-	.carousel-inner .carousel-item img{
-		margin: auto;
-		width:100%;
-		max-width: 250px;
 	}
 
 	.vertical-center {

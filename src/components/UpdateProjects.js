@@ -3,7 +3,7 @@ import {useHistory, useParams} from "react-router-dom";
 import ProjectContext from "../context/projects/ProjectContext";
 import UpdateProjectsImageItem from "./UpdateProjectsImageItem";
 import {storage} from "../firebase/FirebaseInit";
-import {getDownloadURL, uploadBytes,ref } from "firebase/storage"
+import {getDownloadURL, uploadBytes,ref, deleteObject,  } from "firebase/storage"
 import Loading from "./Loading";
 
 function UpdateProjects(props) {
@@ -62,7 +62,7 @@ function UpdateProjects(props) {
 
     const [oldPics,setOldPics] = useState([]);
     const [oldLogo,setOldLogo] = useState(null);
-
+    const [deletingFiles,setDeletingFiles] = useState([]);
 
 
     const handleProjectPicsChange = (event) => {
@@ -98,6 +98,7 @@ function UpdateProjects(props) {
         setOldPics([...oldPics])
     }
     const removeOldPic = (idx)=>{
+        setDeletingFiles([...deletingFiles,oldPics[idx].photoUrl]);
         setOldPics(oldPics.filter((p,i)=> i!==idx))
     }
 
@@ -149,6 +150,12 @@ function UpdateProjects(props) {
         return await getDownloadURL(result.ref);
     }
 
+    const deleteImage = async (imageUrl) => {
+        const imageRef = ref(storage,imageUrl);
+        setLoadingText(`Deleting ${imageRef.name}`);
+        await deleteObject(imageRef);
+    }
+
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -167,6 +174,10 @@ function UpdateProjects(props) {
                         "index": projectPicsIndex[i]
                     }
                 );
+            }
+
+            for(let i=0; i< deletingFiles.length; i++){
+                await deleteImage(deletingFiles[i]);
             }
 
             const project = {
