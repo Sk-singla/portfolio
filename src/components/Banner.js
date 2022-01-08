@@ -18,6 +18,10 @@ export const Banner = () => {
                 <a href="https://github.com/Sk-singla/" target="_blank" rel="noreferrer">
                     <i className="fa fa-github me-3" style={{fontSize: "24px"}}/>
                 </a>
+                <a href="https://www.upwork.com/freelancers/~01ae4530d8e0c0f434/" target="_blank" rel="noreferrer">
+                    <img src="/upwork.png" width="24px" className='align-top me-3'/>
+                </a>
+                
             </div>
         </section>
     )
