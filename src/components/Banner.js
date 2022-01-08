@@ -19,7 +19,7 @@ export const Banner = () => {
                     <i className="fa fa-github me-3" style={{fontSize: "24px"}}/>
                 </a>
                 <a href="https://www.upwork.com/freelancers/~01ae4530d8e0c0f434/" target="_blank" rel="noreferrer">
-                    <img src="/upwork.png" width="24px" className='align-top me-3'/>
+                    <img src="/upwork.png" width="24px" className='align-top me-3' alt=""/>
                 </a>
                 
             </div>
