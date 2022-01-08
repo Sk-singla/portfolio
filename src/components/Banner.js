@@ -21,6 +21,10 @@ export const Banner = () => {
                 <a href="https://www.upwork.com/freelancers/~01ae4530d8e0c0f434/" target="_blank" rel="noreferrer">
                     <img src="/upwork.png" width="24px" className='align-top me-3' alt=""/>
                 </a>
+                <a href="https://www.youtube.com/channel/UCSAUbaI3Y14XxhX0T_RJwTw/" target="_blank" rel="noreferrer">
+                    <i className="fa fa-youtube me-3" style={{fontSize: "24px"}}/>
+                </a>
+
                 
             </div>
         </section>
