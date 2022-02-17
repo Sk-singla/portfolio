@@ -12,14 +12,8 @@ export const Banner = () => {
                 <a href="https://www.linkedin.com/in/samarth-gupta-049120193/" target="_blank" rel="noreferrer">
                     <i className="fa fa-linkedin me-3" style={{fontSize:"24px"}}/>
                 </a>
-                <a href="https://www.instagram.com/sk_singla02/" target="_blank" rel="noreferrer">
-                    <i className="fa fa-instagram me-3" style={{fontSize: "24px"}}/>
-                </a>
                 <a href="https://github.com/Sk-singla/" target="_blank" rel="noreferrer">
                     <i className="fa fa-github me-3" style={{fontSize: "24px"}}/>
-                </a>
-                <a href="https://www.upwork.com/freelancers/~01ae4530d8e0c0f434/" target="_blank" rel="noreferrer">
-                    <img src="/upwork.png" width="24px" className='align-top me-3' alt=""/>
                 </a>
                 <a href="https://www.youtube.com/channel/UCSAUbaI3Y14XxhX0T_RJwTw/" target="_blank" rel="noreferrer">
                     <i className="fa fa-youtube me-3" style={{fontSize: "24px"}}/>
