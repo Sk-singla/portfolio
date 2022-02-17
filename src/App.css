@@ -13,6 +13,12 @@
 	width: 250px;
 }
 
+.empty_tablet{
+	position: relative;
+	width: 55%;
+	height: 50%;
+}
+
 .screenshot{
 	position: absolute;
 	top: 55px;
@@ -20,7 +26,11 @@
 	height: 350px;
 }
 
-
+.screenshot_web{
+	position: relative;
+	width: 50%;
+	top:10px;
+}
 
 
 

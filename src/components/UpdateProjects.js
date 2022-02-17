@@ -54,6 +54,7 @@ function UpdateProjects(props) {
     const [projectPics,setProjectPics] = useState([]);
     const [projectPicsDescriptions,setProjectPicsDescriptions] = useState([]);
     const [projectPicsIndex,setProjectPicsIndex] = useState([]);
+    const [projectPicsType,setProjectPicsType] = useState([]);
     const [technologies,setTechnologies] = useState([]);
     const [githubLink,setGithubLink] = useState("");
     const [productionLink,setProductionLink] = useState("");
@@ -87,6 +88,10 @@ function UpdateProjects(props) {
         projectPicsIndex[idx] = parseInt(text);
         setProjectPicsIndex([...projectPicsIndex]);
     }
+    const handleProjectPicTypeChange = (idx)=>{
+        projectPicsType[idx] = !projectPicsType[idx];
+        setProjectPicsType([...projectPicsType]);
+    }
 
     const handleOldProjectDescriptionChange = (text,idx)=>{
         oldPics[idx].description = text
@@ -95,6 +100,10 @@ function UpdateProjects(props) {
 
     const handleOldProjectPicIndexChange = (text,idx)=>{
         oldPics[idx].index = parseInt(text)
+        setOldPics([...oldPics])
+    }
+    const handleOldProjectPicTypeChange = (idx)=>{
+        oldPics[idx].isWeb = !oldPics[idx].isWeb
         setOldPics([...oldPics])
     }
     const removeOldPic = (idx)=>{
@@ -174,7 +183,8 @@ function UpdateProjects(props) {
                     {
                         "photoUrl":await uploadFileAndGetDownloadUrl(projectPics[i]),
                         "description":projectPicsDescriptions[i],
-                        "index": projectPicsIndex[i]
+                        "index": projectPicsIndex[i],
+                        "isWeb": projectPicsType[i]
                     }
                 );
             }
@@ -331,6 +341,8 @@ function UpdateProjects(props) {
                                     removeImage={removeOldPic}
                                     index={pic.index}
                                     updateIndex={handleOldProjectPicIndexChange}
+                                    isWeb = {pic.isWeb}
+                                    updateWeb ={handleOldProjectPicTypeChange}
                                 />
                         })
                     }
@@ -345,6 +357,8 @@ function UpdateProjects(props) {
                                     removeImage={removeImage}
                                     index={projectPicsIndex[idx]}
                                     updateIndex={handleProjectPicIndexChange}
+                                    isWeb = {projectPicsType[idx]}
+                                    updateWeb ={handleProjectPicTypeChange}
                                 />
                         })
                     }
