@@ -5,8 +5,9 @@ export const Banner = () => {
         <section id="banner">
             <div className="inner">
                 <h2>Hi, I am Samarth.</h2>
-                <p>I am an Android Developer.<br/>
-                    I build Android Apps using Kotlin and Backend using Ktor and Node.js
+                <p>A Software Developer, Who converts Ideas to System. <br/> <br/>
+                <span style={{fontWeight:"500"}}>Few technologies, I've been working with:</span><br/>
+                Android (Kotlin), React.js, Node.js, Ktor...
                 </p>
                 <br/>
                 <a href="https://www.linkedin.com/in/samarth-gupta-049120193/" target="_blank" rel="noreferrer">
